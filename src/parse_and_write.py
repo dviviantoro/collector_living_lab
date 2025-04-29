@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import random
 import argparse
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.influxdb_interface import push_data
@@ -33,6 +34,7 @@ def parse_and_write(raw_data):
 
 if __name__ == "__main__":
     args = parser_init().parse_args()
+    random_sleep = random.randint(100, 3000)
 
     # special for DC
     if (args.rawdata).split("-")[0] == "DC": 
@@ -44,5 +46,5 @@ if __name__ == "__main__":
         ]
         subprocess.Popen(command)
 
-    time.sleep(1)
+    time.sleep(random_sleep/1000)
     parse_and_write(args.rawdata)

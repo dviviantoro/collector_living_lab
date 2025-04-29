@@ -1,10 +1,13 @@
 import os
 import sys
+import time
+import random
 import argparse
 import subprocess
 from datetime import datetime, timezone
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.influxdb_interface import *
+from modules.redis_interface import publish_redis
 
 def parser_init():
     parser = argparse.ArgumentParser(description="Agregating face atribute interface")
@@ -58,9 +61,15 @@ def calculate_energy(channel):
         last_value = get_last_data(channel)
         energy = (last_value["vol"] * last_value["cur"] * delta) / (1000 * 3600)
         ask_write_influx(f"E{channel},{energy}")
+
     else:
         print("DC measurement detect lost routine, will count from 0")
 
 if __name__ == "__main__":
+    random_sleep = random.randint(100, 1500)
     args = parser_init().parse_args()
     calculate_energy(args.channel)
+
+    time.sleep(random_sleep/1000)
+    channel_redis = "energy_watcher"
+    publish_redis(channel_redis, f"E{args.channel}:1")
