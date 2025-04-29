@@ -36,9 +36,17 @@ class App:
             except Exception as e:
                 print(e)
 
-if __name__ == "__main__":
-    port = check_available_port()
+def run_energy_watcher():
+    command = [
+        f"{cwd}/.venv/bin/python",
+        f"{cwd}/src/watch_energy.py"
+    ]
+    subprocess.Popen(command)
     
+if __name__ == "__main__":
+    run_energy_watcher()
+
+    port = check_available_port()
     if port:
         app = App()
         loop = asyncio.get_event_loop()
