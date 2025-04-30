@@ -60,7 +60,7 @@ def run_dummy_dc():
 def run_dummy_ac():
     command = [
         f"{cwd}/.venv/bin/python",
-        f"{cwd}/test/push_dc.py"
+        f"{cwd}/test/push_ac.py"
     ]
     subprocess.Popen(command)
     
