@@ -63,5 +63,10 @@ def parse_data(raw_data):
             "energy": float(data[1])
         }
         dictionary = generate_dict("energy_dc", data[0], dict_fields)
+    elif channel == "EAC":
+        dict_fields = {
+            "energy": float(data[1])
+        }
+        dictionary = generate_dict("energy_ac", data[0], dict_fields)
 
     return dictionary

@@ -42,9 +42,32 @@ def run_energy_watcher():
         f"{cwd}/src/watch_energy.py"
     ]
     subprocess.Popen(command)
+
+def run_ac_energy_watcher():
+    command = [
+        f"{cwd}/.venv/bin/python",
+        f"{cwd}/src/do_math_energy.py"
+    ]
+    subprocess.Popen(command)
+
+def run_dummy_dc():
+    command = [
+        f"{cwd}/.venv/bin/python",
+        f"{cwd}/test/push_dc.py"
+    ]
+    subprocess.Popen(command)
+
+def run_dummy_ac():
+    command = [
+        f"{cwd}/.venv/bin/python",
+        f"{cwd}/test/push_dc.py"
+    ]
+    subprocess.Popen(command)
     
 if __name__ == "__main__":
-    run_energy_watcher()
+    run_ac_energy_watcher()
+    run_dummy_ac()
+    run_dummy_dc()
 
     port = check_available_port()
     if port:

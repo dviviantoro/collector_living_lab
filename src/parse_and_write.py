@@ -5,6 +5,7 @@ import random
 import argparse
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.influxdb_interface import push_data
+from modules.redis_interface import publish_redis
 from modules.util import parse_data
 from dotenv import load_dotenv
 import subprocess
@@ -48,3 +49,9 @@ if __name__ == "__main__":
 
     time.sleep(random_sleep/1000)
     parse_and_write(args.rawdata)
+    
+    if (args.rawdata).split("-")[0] == "AC": 
+
+        channel_redis = "energy_ac"
+        channel_ac = (args.rawdata).split(",")[0]
+        publish_redis(channel_redis, f"{channel_ac}:1")
