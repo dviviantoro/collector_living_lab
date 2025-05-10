@@ -55,7 +55,7 @@ def parse_data(raw_data):
         dict_fields = {
             "irr": float(data[1]),
             "temp": float(data[2]),
-            "hum": int(data[3])
+            "hum": float(data[3])
         }
         dictionary = generate_dict("irradiance", data[0], dict_fields)
     elif channel == "EDC":

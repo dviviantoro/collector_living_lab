@@ -9,13 +9,13 @@ cwd = os.getenv('CWD')
 usb_ports = ["/dev/ttyUSB0", "/dev/ttyUSB1", "/dev/ttyUSB2"]
 
 def check_available_port():
+	available_ports = []
     for port in usb_ports:
         if os.path.exists(port):
             print(f"Device {port} is available")
-            return port
-        
-    print("No device is available, please check your USB dongle")
-    return False
+			available_ports.append(port)
+	print(available_ports)
+	return available_ports
 
 class App:
     async def read_serial(self, aioserial_instance: aioserial.AioSerial):
@@ -66,13 +66,13 @@ def run_dummy_ac():
     
 if __name__ == "__main__":
     run_ac_energy_watcher()
-    run_dummy_ac()
-    run_dummy_dc()
+#    run_dummy_ac()
+#    run_dummy_dc()
 
     port = check_available_port()
     if port:
         app = App()
         loop = asyncio.get_event_loop()
-        asyncio.ensure_future(app.read_serial(aioserial.AioSerial(port=port,baudrate=115200)))
+        asyncio.ensure_future(app.read_serial(aioserial.AioSerial(port=port[0], baudrate=115200)))
         loop.run_forever()
 
