@@ -52,7 +52,7 @@ class App:
                             # counter += 1
                             # print(counter)
                             print(e)
-                            # last_seen[current_device_id] = current_unix
+                            last_seen[current_device_id] = current_unix
 
                 # if current_device_id != last_device_id and device != "DC":
                 #     if device == "AC":
