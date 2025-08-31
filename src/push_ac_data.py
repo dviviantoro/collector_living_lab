@@ -48,3 +48,6 @@ for message in pubsub.listen():
                 print(data_dict)
                 push_data(data_dict)
             os.remove(temp_json)
+
+            time.sleep(1)
+            ac_channels = {key: False for key in ac_channels}
