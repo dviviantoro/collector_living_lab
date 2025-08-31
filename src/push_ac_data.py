@@ -45,9 +45,9 @@ for message in pubsub.listen():
 
         if ac_channel in ac_channels and int(status) == True:
             ac_channels[ac_channel] = True
-            counter += 1
         
         if all(ac_channels.values()):
+            counter += 1
             time.sleep(2)
             with open(temp_json, 'r') as json_file:
                 data_dict = json.load(json_file)
