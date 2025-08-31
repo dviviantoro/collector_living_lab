@@ -31,37 +31,37 @@ class App:
                 current_device_id = received_data[0]
                 device = current_device_id.split("-")[0]
 
-                if len(received_data) > 1:
-                    if device == "AC":
-                        create_temp_json(received_data)
-
-                    elif current_device_id in device_id_list and device != "DC":
-                        current_unix = time.time()
-                        print(last_seen)
-                        try:
-                            if last_seen[current_device_id] - current_unix > 5:
-                                command = [
-                                    f"{cwd}/.venv/bin/python",
-                                    f"{cwd}/src/parse_and_write.py",
-                                    "-d", data
-                                ]
-                                subprocess.Popen(command)
-                        except Exception as e:
-                            print(e)
-                            last_seen[current_device_id] = current_unix
-
-                # if current_device_id != last_device_id and device != "DC":
+                # if len(received_data) > 1:
                 #     if device == "AC":
                 #         create_temp_json(received_data)
 
-                #     elif len(received_data) > 1:
-                #         command = [
-                #             f"{cwd}/.venv/bin/python",
-                #             f"{cwd}/src/parse_and_write.py",
-                #             "-d", data
-                #         ]
-                #         subprocess.Popen(command)
-                # last_device_id = current_device_id
+                #     elif current_device_id in device_id_list and device != "DC":
+                #         current_unix = time.time()
+                #         print(last_seen)
+                #         try:
+                #             if last_seen[current_device_id] - current_unix > 5:
+                #                 command = [
+                #                     f"{cwd}/.venv/bin/python",
+                #                     f"{cwd}/src/parse_and_write.py",
+                #                     "-d", data
+                #                 ]
+                #                 subprocess.Popen(command)
+                #         except Exception as e:
+                #             print(e)
+                #             last_seen[current_device_id] = current_unix
+
+                if current_device_id != last_device_id and device != "DC":
+                    if device == "AC":
+                        create_temp_json(received_data)
+
+                    elif len(received_data) > 1:
+                        command = [
+                            f"{cwd}/.venv/bin/python",
+                            f"{cwd}/src/parse_and_write.py",
+                            "-d", data
+                        ]
+                        subprocess.Popen(command)
+                last_device_id = current_device_id
             except Exception as e:
                 print(e)
 
