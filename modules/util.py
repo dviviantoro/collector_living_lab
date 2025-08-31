@@ -43,24 +43,6 @@ def create_temp_json(data, filename = temp_json):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
-
-    # try:
-    #     with open(filename, 'w') as json_file:
-    #         json.dump([dictionary], json_file, indent=4)
-    #     print(f"Initial data successfully written to {filename}")
-    # except:
-    #     print("sampai sini")
-    #     with open(filename, 'r') as json_file:
-    #         data_list = json.load(json_file)
-
-    #     if isinstance(data_list, list):
-    #         data_list.append(dictionary)
-    #         with open(filename, 'w') as json_file:
-    #             json.dump(data_list, json_file, indent=4)
-    #         print(f"Successfully appended a new record to {filename}")
-    #     else:
-    #         print("Error: The existing file does not contain a list. Cannot append.")
-
 def generate_dict(measurement, channel, fields):
     new_dict = {}
     new_dict["measurement"] = measurement 
