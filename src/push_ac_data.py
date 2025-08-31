@@ -46,6 +46,7 @@ for message in pubsub.listen():
 
         
         if all(ac_channels.values()):
+            time.sleep(2)
             with open(temp_json, 'r') as json_file:
                 data_dict = json.load(json_file)
                 print(data_dict)
