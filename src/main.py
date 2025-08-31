@@ -37,7 +37,7 @@ class App:
                     elif current_device_id in device_id_list and device != "DC":
                         current_unix = time.time()
                         try:
-                            if current_unix - last_seen[current_device_id] > 5:
+                            if current_unix - last_seen[current_device_id] > 100:
                                 command = [
                                     f"{cwd}/.venv/bin/python",
                                     f"{cwd}/src/parse_and_write.py",
@@ -82,7 +82,7 @@ def run_dummy_ac():
 def run_collector_ac():
     command = [
         f"{cwd}/.venv/bin/python",
-        f"{cwd}/test/collect_ac.py"
+        f"{cwd}/src/collect_ac.py"
     ]
     subprocess.Popen(command)
 
