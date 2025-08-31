@@ -37,15 +37,16 @@ if __name__ == "__main__":
     args = parser_init().parse_args()
     random_sleep = random.randint(100, 3000)
 
+    # not use anymore
     # special for DC
-    if (args.rawdata).split("-")[0] == "DC": 
-        channel = (args.rawdata).split(",")[0]
-        command = [
-            f"{cwd}/.venv/bin/python",
-            f"{cwd}/src/calculate_energy.py",
-            "-c", channel
-        ]
-        subprocess.Popen(command)
+    # if (args.rawdata).split("-")[0] == "DC": 
+    #     channel = (args.rawdata).split(",")[0]
+    #     command = [
+    #         f"{cwd}/.venv/bin/python",
+    #         f"{cwd}/src/calculate_energy.py",
+    #         "-c", channel
+    #     ]
+    #     subprocess.Popen(command)
 
     time.sleep(random_sleep/1000)
     parse_and_write(args.rawdata)

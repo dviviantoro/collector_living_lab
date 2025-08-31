@@ -1,9 +1,37 @@
-import os
+import os, json
 from dotenv import load_dotenv
 load_dotenv()
 
 cwd = os.getenv("CWD")
 location = os.getenv("DEVICE_LOCATION")
+temp_json = cwd + "/temp.json"
+
+def create_temp_json(data, filename = temp_json):
+    dict_fields = {
+        "vol": float(data[1]),
+        "cur": float(data[2]),
+        "pow": float(data[3]),
+        "engy": float(data[4]),
+        "freq": float(data[5]),
+        "pf": float(data[6])
+    }
+    dictionary = generate_dict("ac", data[0], dict_fields)
+    
+    try:
+        with open(filename, 'w') as json_file:
+            json.dump([dictionary], json_file, indent=4)
+        print(f"Initial data successfully written to {filename}")
+    except:
+        with open(filename, 'r') as json_file:
+            data_list = json.load(json_file)
+
+        if isinstance(data_list, list):
+            data_list.append(dictionary)
+            with open(filename, 'w') as json_file:
+                json.dump(data_list, json_file, indent=4)
+            print(f"Successfully appended a new record to {filename}")
+        else:
+            print("Error: The existing file does not contain a list. Cannot append.")
 
 def generate_dict(measurement, channel, fields):
     new_dict = {}
@@ -50,12 +78,6 @@ def parse_data(raw_data):
             "pf": float(data[6])
         }
         dictionary = generate_dict("ac", data[0], dict_fields)
-    elif channel == "DC":
-        dict_fields = {
-            "vol": float(data[1]),
-            "cur": float(data[2])
-        }
-        dictionary = generate_dict("dc", data[0], dict_fields)
     elif channel == "IRR":
         dict_fields = {
             "irr": float(data[1]),

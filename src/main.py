@@ -1,9 +1,9 @@
-import os
+import os, sys
 import asyncio
 import aioserial
-from dotenv import load_dotenv
 import subprocess
-load_dotenv()
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from modules.util import *
 
 cwd = os.getenv('CWD')
 usb_ports = ["/dev/ttyUSB0", "/dev/ttyUSB1", "/dev/ttyUSB2"]
@@ -18,7 +18,6 @@ def check_available_port():
     print(available_ports)
     return available_ports
 
-
 class App:
     async def read_serial(self, aioserial_instance: aioserial.AioSerial):
         last_device_id = ""
@@ -32,7 +31,9 @@ class App:
                 device = current_device_id.split("-")[0]
 
                 if current_device_id != last_device_id and device != "DC":
-                    if len(received_data) > 1:
+                    if device == "AC":
+                        create_temp_json(data)
+                    elif len(received_data) > 1:
                         command = [
                             f"{cwd}/.venv/bin/python",
                             f"{cwd}/src/parse_and_write.py",
