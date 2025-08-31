@@ -38,34 +38,19 @@ class App:
                         create_temp_json(received_data)
 
                     elif current_device_id in device_id_list and device != "DC":
-                        # if received_data not in collected_data:
-                        #     collected_data.append(received_data)
-                        
                         current_unix = time.time()
-                        print(last_seen)
-                        
-                        # command = [
-                        #     f"{cwd}/.venv/bin/python",
-                        #     f"{cwd}/src/parse_and_write.py",
-                        #     "-d", data
-                        # ]
-                        # subprocess.Popen(command)
-                        # last_seen[current_device_id] = current_unix
-
-                        # if last_seen[current_device_id] - current_unix > 5:
-
-
                         try:
-                            if last_seen[current_device_id] - current_unix > 5:
+                            if current_unix - last_seen[current_device_id] > 5:
                                 command = [
                                     f"{cwd}/.venv/bin/python",
                                     f"{cwd}/src/parse_and_write.py",
                                     "-d", data
                                 ]
                                 subprocess.Popen(command)
+                                last_seen[current_device_id] = current_unix
                         except Exception as e:
-                            counter += 1
-                            print(counter)
+                            # counter += 1
+                            # print(counter)
                             print(e)
                             # last_seen[current_device_id] = current_unix
 
