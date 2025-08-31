@@ -12,9 +12,11 @@ from modules.util import *
 host = "127.0.0.1"
 port = 6379
 db = 0
+channel = "energy_ac"
 
 r = redis.StrictRedis(host=host, port=port, db=db, decode_responses=True)
 pubsub = r.pubsub()
+pubsub.subscribe(channel)
 
 ac_channels = {
     "AC-1": False,
