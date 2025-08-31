@@ -36,6 +36,8 @@ def ask_write_influx(data):
     subprocess.Popen(command)
 
 print("Listening for messages...")
+
+counter = 0
 for message in pubsub.listen():
     if message['type'] == 'message':
         ac_channel = message['data'].split(":")[0]
@@ -43,14 +45,16 @@ for message in pubsub.listen():
 
         if ac_channel in ac_channels and int(status) == True:
             ac_channels[ac_channel] = True
-
+            counter += 1
         
         if all(ac_channels.values()):
             time.sleep(2)
             with open(temp_json, 'r') as json_file:
                 data_dict = json.load(json_file)
-                print(data_dict)
-                push_data(data_dict)
+                
+                if counter % 3 == 0:
+                    push_data(data_dict)
+            print("removing temp json")
             os.remove(temp_json)
 
             time.sleep(1)
