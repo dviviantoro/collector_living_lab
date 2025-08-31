@@ -35,8 +35,9 @@ class App:
                     if device == "AC":
                         create_temp_json(received_data)
 
-                    elif current_device_id in device_id_list:
+                    elif current_device_id in device_id_list and device != "DC":
                         current_unix = time.time()
+                        print(last_seen)
                         try:
                             if last_seen[current_device_id] - current_unix > 5:
                                 command = [
