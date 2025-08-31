@@ -1,7 +1,8 @@
-import os, json
-from redis_interface import publish_redis
+import os, json,sys
+from modules.redis_interface import publish_redis
 from dotenv import load_dotenv
 load_dotenv()
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 cwd = os.getenv("CWD")
 location = os.getenv("DEVICE_LOCATION")
