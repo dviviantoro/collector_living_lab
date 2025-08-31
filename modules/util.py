@@ -22,6 +22,7 @@ def create_temp_json(data, filename = temp_json):
             json.dump([dictionary], json_file, indent=4)
         print(f"Initial data successfully written to {filename}")
     except:
+        print("sampai sini")
         with open(filename, 'r') as json_file:
             data_list = json.load(json_file)
 
