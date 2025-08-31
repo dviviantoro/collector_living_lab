@@ -50,8 +50,8 @@ for message in pubsub.listen():
             with open(temp_json, 'r') as json_file:
                 data_dict = json.load(json_file)
                 print(data_dict)
-            #     push_data(data_dict)
-            # os.remove(temp_json)
+                push_data(data_dict)
+            os.remove(temp_json)
 
-            # time.sleep(1)
-            # ac_channels = {key: False for key in ac_channels}
+            time.sleep(1)
+            ac_channels = {key: False for key in ac_channels}
