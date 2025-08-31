@@ -21,20 +21,25 @@ def parse_data(raw_data):
 
     if channel == "AMB":
         dict_fields = {
-            "bat": float(data[1]),
-            "temp": float(data[2]),
-            "hum": int(data[3]),
-            "lux": int(data[4]),
-            "rain": float(data[5])
+            # "bat": float(data[1]),
+            "temp": float(data[1]),
+            "hum": int(data[2]),
+            "lux": int(data[3]),
+            "rain": float(data[4])
         }
         dictionary = generate_dict("ambient", data[0], dict_fields)
     elif channel == "SUR":
         dict_fields = {
-            "bat": float(data[1]),
-            "temp_top": float(data[2]),
-            "temp_bot": float(data[3])
+            # "bat": float(data[1]),
+            "temp_top": float(data[1]),
+            "temp_bot": float(data[2])
         }
-        dictionary = generate_dict("surface", data[0], dict_fields)
+        if dict_fields["temp_top"] < 0 or dict_fields["temp_bot"] < 0:
+            dictionary = False
+        elif dict_fields["temp_top"] == 85 or dict_fields["temp_bot"] == 85:
+            dictionary = False
+        else:
+            dictionary = generate_dict("surface", data[0], dict_fields)
     elif channel == "AC":
         dict_fields = {
             "vol": float(data[1]),

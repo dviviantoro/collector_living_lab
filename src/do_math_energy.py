@@ -51,13 +51,13 @@ def get_last_ac_energy(sentence):
     for table in tables:
         for record in table.records:
             dict_energy[record["channel"]] = float(record["_value"])
-    print(dict_energy)
+    # print(dict_energy)
     return dict_energy
 
 print("Listening for messages...")
 for message in pubsub.listen():
     if message['type'] == 'message':
-        print(f"Received message: {message['data']}")
+        # print(f"Received message: {message['data']}")
         ac_channel = message['data'].split(":")[0]
         status = message['data'].split(":")[1]
 
@@ -65,11 +65,11 @@ for message in pubsub.listen():
             energy_dict[ac_channel] = True
         
         if all(energy_dict.values()):
-            print("All AC value is TRUE, time to do math operation")
+            # print("All AC value is TRUE, time to do math operation")
             dict_ac_energy = get_last_ac_energy(last_ac_energy_sentence())
 
             total_energy = dict_ac_energy["AC-4"] + dict_ac_energy["AC-3"] + dict_ac_energy["AC-2"] - dict_ac_energy["AC-1"]
-            print(total_energy)
+            # print(total_energy)
             ask_write_influx(f"EAC-1,{total_energy}")
 
             time.sleep(1)

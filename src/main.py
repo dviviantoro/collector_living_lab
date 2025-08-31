@@ -21,20 +21,25 @@ def check_available_port():
 
 class App:
     async def read_serial(self, aioserial_instance: aioserial.AioSerial):
+        last_device_id = ""
         while True:
             try:
                 data: bytes = (await aioserial_instance.readline_async()).decode().strip()
-            
                 received_data = data.split(",")
-                print(received_data)
+                print(f"received_data now: {received_data}")
 
-                if len(received_data) > 1:
-                    command = [
-                        f"{cwd}/.venv/bin/python",
-                        f"{cwd}/src/parse_and_write.py",
-                        "-d", data
-                    ]
-                    subprocess.Popen(command)
+                current_device_id = received_data[0]
+                device = current_device_id.split("-")[0]
+
+                if current_device_id != last_device_id and device != "DC":
+                    if len(received_data) > 1:
+                        command = [
+                            f"{cwd}/.venv/bin/python",
+                            f"{cwd}/src/parse_and_write.py",
+                            "-d", data
+                        ]
+                        subprocess.Popen(command)
+                last_device_id = current_device_id
             except Exception as e:
                 print(e)
 

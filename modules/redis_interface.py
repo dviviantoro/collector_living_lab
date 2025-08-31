@@ -34,7 +34,7 @@ def start_listen_redis(channel):
 
 def publish_redis(channel, message):
     Publish().pub(channel, message)
-    print(f"Redis published [{channel}, {message}]")
+    # print(f"Redis published [{channel}, {message}]")
 
 def create_pubsub(channel):
     r = redis.StrictRedis(host=host, port=port, db=db)
