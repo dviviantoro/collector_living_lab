@@ -8,6 +8,8 @@ cwd = os.getenv("CWD")
 location = os.getenv("DEVICE_LOCATION")
 temp_json = cwd + "/temp.json"
 
+device_id_list = ["AMB-1", "AMB-2", "SUR-1", "SUR-2", "IRR-1", "IRR-2", "IRR-3"]
+
 def create_temp_json(data, filename = temp_json):
     channel_redis = "energy_ac"
     channel_ac = data[0]
@@ -32,15 +34,15 @@ def create_temp_json(data, filename = temp_json):
         all_data.append(dictionary)
         with open(temp_json, 'w') as json_file:
             json.dump(all_data, json_file, indent=4)
-        print(f"New JSON data appended and successfully written to '{temp_json}'")
+        # print(f"New JSON data appended and successfully written to '{temp_json}'")
         
     except FileNotFoundError:
-        print(f"The file '{temp_json}' was not found. A new one will be created.")
+        # print(f"The file '{temp_json}' was not found. A new one will be created.")
         # Create the file with the new data.
         with open(temp_json, 'w') as json_file:
             all_data = [dictionary] # Initialize with new data
             json.dump(all_data, json_file, indent=4)
-            print(f"New JSON data successfully written to '{temp_json}'")
+            # print(f"New JSON data successfully written to '{temp_json}'")
             
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON from file. The file may be corrupt: {e}")
