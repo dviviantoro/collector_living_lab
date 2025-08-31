@@ -51,8 +51,7 @@ if __name__ == "__main__":
     time.sleep(random_sleep/1000)
     parse_and_write(args.rawdata)
     
-    if (args.rawdata).split("-")[0] == "AC": 
-
-        channel_redis = "energy_ac"
-        channel_ac = (args.rawdata).split(",")[0]
-        publish_redis(channel_redis, f"{channel_ac}:1")
+    # if (args.rawdata).split("-")[0] == "AC": 
+    #     channel_redis = "energy_ac"
+    #     channel_ac = (args.rawdata).split(",")[0]
+    #     publish_redis(channel_redis, f"{channel_ac}:1")

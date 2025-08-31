@@ -1,4 +1,5 @@
 import os, json
+from redis_interface import publish_redis
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -7,6 +8,10 @@ location = os.getenv("DEVICE_LOCATION")
 temp_json = cwd + "/temp.json"
 
 def create_temp_json(data, filename = temp_json):
+    channel_redis = "energy_ac"
+    channel_ac = data.split(",")[0]
+    publish_redis(channel_redis, f"{channel_ac}:1")
+
     dict_fields = {
         "vol": float(data[1]),
         "cur": float(data[2]),

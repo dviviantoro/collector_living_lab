@@ -32,7 +32,7 @@ class App:
 
                 if current_device_id != last_device_id and device != "DC":
                     if device == "AC":
-                        create_temp_json(data)
+                        create_temp_json(received_data)
                     elif len(received_data) > 1:
                         command = [
                             f"{cwd}/.venv/bin/python",
