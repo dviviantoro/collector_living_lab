@@ -17,22 +17,49 @@ def create_temp_json(data, filename = temp_json):
     }
     dictionary = generate_dict("ac", data[0], dict_fields)
     
+    all_data = []
     try:
-        with open(filename, 'w') as json_file:
-            json.dump([dictionary], json_file, indent=4)
-        print(f"Initial data successfully written to {filename}")
-    except:
-        print("sampai sini")
-        with open(filename, 'r') as json_file:
-            data_list = json.load(json_file)
+        if os.path.exists(temp_json):
+            with open(temp_json, 'r') as json_file:
+                all_data = json.load(json_file)
+        
+        all_data.append(dictionary)
+        with open(temp_json, 'w') as json_file:
+            json.dump(all_data, json_file, indent=4)
+        print(f"New JSON data appended and successfully written to '{temp_json}'")
+        
+    except FileNotFoundError:
+        print(f"The file '{temp_json}' was not found. A new one will be created.")
+        # Create the file with the new data.
+        with open(temp_json, 'w') as json_file:
+            all_data = [dictionary] # Initialize with new data
+            json.dump(all_data, json_file, indent=4)
+            print(f"New JSON data successfully written to '{temp_json}'")
+            
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON from file. The file may be corrupt: {e}")
+    except IOError as e:
+        print(f"Error writing to file: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
-        if isinstance(data_list, list):
-            data_list.append(dictionary)
-            with open(filename, 'w') as json_file:
-                json.dump(data_list, json_file, indent=4)
-            print(f"Successfully appended a new record to {filename}")
-        else:
-            print("Error: The existing file does not contain a list. Cannot append.")
+
+    # try:
+    #     with open(filename, 'w') as json_file:
+    #         json.dump([dictionary], json_file, indent=4)
+    #     print(f"Initial data successfully written to {filename}")
+    # except:
+    #     print("sampai sini")
+    #     with open(filename, 'r') as json_file:
+    #         data_list = json.load(json_file)
+
+    #     if isinstance(data_list, list):
+    #         data_list.append(dictionary)
+    #         with open(filename, 'w') as json_file:
+    #             json.dump(data_list, json_file, indent=4)
+    #         print(f"Successfully appended a new record to {filename}")
+    #     else:
+    #         print("Error: The existing file does not contain a list. Cannot append.")
 
 def generate_dict(measurement, channel, fields):
     new_dict = {}
