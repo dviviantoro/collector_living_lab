@@ -10,7 +10,7 @@ temp_json = cwd + "/temp.json"
 
 def create_temp_json(data, filename = temp_json):
     channel_redis = "energy_ac"
-    channel_ac = data.split(",")[0]
+    channel_ac = data[0]
     publish_redis(channel_redis, f"{channel_ac}:1")
 
     dict_fields = {
