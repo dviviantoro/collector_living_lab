@@ -38,24 +38,28 @@ def ask_write_influx(data):
 print("Listening for messages...")
 
 counter = 0
-for message in pubsub.listen():
-    if message['type'] == 'message':
-        ac_channel = message['data'].split(":")[0]
-        status = message['data'].split(":")[1]
+while True:
+    try:
+        for message in pubsub.listen():
+            if message['type'] == 'message':
+                ac_channel = message['data'].split(":")[0]
+                status = message['data'].split(":")[1]
 
-        if ac_channel in ac_channels and int(status) == True:
-            ac_channels[ac_channel] = True
-        
-        if all(ac_channels.values()):
-            counter += 1
-            time.sleep(2)
-            with open(temp_json, 'r') as json_file:
-                data_dict = json.load(json_file)
+                if ac_channel in ac_channels and int(status) == True:
+                    ac_channels[ac_channel] = True
                 
-                if counter % 3 == 0:
-                    push_data(data_dict)
-            print("removing temp json")
-            os.remove(temp_json)
+                if all(ac_channels.values()):
+                    counter += 1
+                    time.sleep(2)
+                    with open(temp_json, 'r') as json_file:
+                        data_dict = json.load(json_file)
+                        
+                        if counter % 2 == 0:
+                            push_data(data_dict)
+                    print("removing temp json")
+                    os.remove(temp_json)
 
-            time.sleep(1)
-            ac_channels = {key: False for key in ac_channels}
+                    time.sleep(1)
+                    ac_channels = {key: False for key in ac_channels}
+    except Exception as e:
+        print(e)
