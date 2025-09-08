@@ -38,6 +38,13 @@ def ask_write_influx(data):
 print("Listening for messages...")
 
 counter = 0
+
+try:
+    print("removing temp json")
+    os.remove(temp_json)
+except Exception as e:
+    print(e)
+
 while True:
     try:
         for message in pubsub.listen():
@@ -56,8 +63,11 @@ while True:
                         
                         if counter % 2 == 0:
                             push_data(data_dict)
-                    print("removing temp json")
-                    os.remove(temp_json)
+                    try:
+                        print("removing temp json")
+                        os.remove(temp_json)
+                    except Exception as e:
+                        print(e)
 
                     time.sleep(1)
                     ac_channels = {key: False for key in ac_channels}
